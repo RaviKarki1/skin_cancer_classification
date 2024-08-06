@@ -131,3 +131,4 @@ dist
 
 #onnx files
 *.onnx
+frontend/skin_cancer_model.onnx
