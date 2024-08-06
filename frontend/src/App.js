@@ -1,11 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
-import SkinCancerClassifier from './Pages/Classifier'
+import SkinCancerClassifier from "./Pages/Classifier"
 
 function App() {
   return (
     <div className="App">
-      <SkinCancerClassifier />
+      <SkinCancerClassifier/>
     </div>
   );
 }
