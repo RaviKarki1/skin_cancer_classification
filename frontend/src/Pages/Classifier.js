@@ -42,7 +42,7 @@ const SkinCancerClassifier = () => {
     <div>
       <h1>Skin Cancer Classifier</h1>
       {/* Add UI elements to load input data and trigger the runModel function */}
-      <button onClick={runModel}>Run Model</button>
+      <button onClick={runModel}>Predict</button>
       <p>The predicted class is: </p>
       {prediction && <div>Prediction: {prediction}</div>}
     </div>
