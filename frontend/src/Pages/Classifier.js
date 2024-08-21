@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import * as ort from 'onnxruntime-web';
 
-const SkinCancerClassifier = () => {
+const SkinCancerClassifier = (props) => {
   const [model, setModel] = useState(null);
   const [inputData, setInputData] = useState(null); // Assume this will hold your input image data
   const [prediction, setPrediction] = useState(null);
+  //created this state for test only
+  const [pred, setPred] = useState();
 
   useEffect(() => {
     // Load the ONNX model
@@ -20,6 +22,10 @@ const SkinCancerClassifier = () => {
   }, []);
 
   const runModel = async () => {
+    //test
+    setPred(true);
+    props.predictionStatus(true)
+    //test
     if (!model || !inputData) return;
 
     try {
@@ -39,12 +45,13 @@ const SkinCancerClassifier = () => {
   };
 
   return (
-    <div>
-      <h1>Skin Cancer Classifier</h1>
+    <div className="pred-result">
       {/* Add UI elements to load input data and trigger the runModel function */}
       <button onClick={runModel}>Predict</button>
-      <p>The predicted class is: </p>
-      {prediction && <div>Prediction: {prediction}</div>}
+      {pred && <div className="prediction-container">
+        <p>The predicted class is: </p>
+        {prediction && <div>Prediction: {prediction}</div>}
+      </div>}
     </div>
   );
 };

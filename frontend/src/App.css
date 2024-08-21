@@ -36,3 +36,45 @@
     transform: rotate(360deg);
   }
 }
+
+.centered{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.uploadedImage{
+  height: 264px;
+  width: 264px;
+}
+
+.uploadButton{
+  margin-top: 2%;
+}
+.predictions{
+  position: relative;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-flow: row;
+}
+
+.upload-container, .pred-container{
+  width: 50%;
+  border: 2px solid;
+  border-radius: 5%;
+  margin: 1%;
+}
+
+.upload-container{
+  left: 0%;
+}
+.pred-container{
+  left: 50%;
+  display: flex;
+  justify-content: center;
+}
+
+.pred-result{
+  align-content: end;
+}
