@@ -52,7 +52,7 @@
 }
 .predictions{
   position: relative;
-  width: 90%;
+  width: 50%;
   margin-left: auto;
   margin-right: auto;
   display: flex;
@@ -77,4 +77,8 @@
 
 .pred-result{
   align-content: end;
+}
+
+.uploadedImage{
+  width: 90%;
 }
