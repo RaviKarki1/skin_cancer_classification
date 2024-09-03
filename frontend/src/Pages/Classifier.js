@@ -1,51 +1,55 @@
 import React, { useState, useEffect } from 'react';
 import * as ort from 'onnxruntime-web';
 
-const SkinCancerClassifier = () => {
-  const [model, setModel] = useState(null);
-  const [inputData, setInputData] = useState(null); // Assume this will hold your input image data
+const SkinCancerClassifier = (props) => {
   const [prediction, setPrediction] = useState(null);
 
-  useEffect(() => {
-    // Load the ONNX model
-    const loadModel = async () => {
-      try {
-        const session = await ort.InferenceSession.create('/skin_cancer_model.onnx');
-        setModel(session);
-      } catch (err) {
-        console.error('Failed to load the model:', err);
-      }
-    };
-    loadModel();
-  }, []);
+  const [pred, setPred] = useState();
 
   const runModel = async () => {
-    if (!model || !inputData) return;
-
-    try {
-      // Preprocess input data as required by your model
-      const inputTensor = new ort.Tensor('float32', inputData, [1, 3, 28, 28]);
-
-      // Run inference
-      const feeds = { input: inputTensor };
-      const results = await model.run(feeds);
-
-      // Extract and use the output (assuming the model has a single output named 'output')
-      const output = results.output.data;
-      setPrediction(output);
-    } catch (err) {
-      console.error('Failed to run the model:', err);
-    }
+    //test
+    setPred(true);
+    props.predictionStatus(true)
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append('file', props.curImg)
+    console.log(formData)
+
+    try{
+        const response = await fetch('http://127.0.0.1:5000/upload', {
+            method: 'POST',
+            body: formData
+        })
+
+        if(response.ok){
+            const data = await response.json();
+            console.log('File uploaded successfully', data)
+            console.log("return message: "+data.message)
+            //TODO: update it later to eb prediction
+            setPrediction(data.message)
+        }else{
+            console.error('File upload failed:', response.statusText);
+        }
+    }catch(e){
+        console.error('File upload error: ', e)
+    }
+}
+
   return (
-    <div>
-      <h1>Skin Cancer Classifier</h1>
+    <form 
+      className="pred-result"
+      onSubmit={handleSubmit}>
       {/* Add UI elements to load input data and trigger the runModel function */}
-      <button onClick={runModel}>Run Model</button>
-      <p>The predicted class is: </p>
-      {prediction && <div>Prediction: {prediction}</div>}
-    </div>
+      <button onClick={runModel}>Predict</button>
+      {pred && <div className="prediction-container">
+        <p>The predicted class is: </p>
+        {prediction && <div>{prediction}</div>}
+      </div>}
+    </form>
   );
 };
 
