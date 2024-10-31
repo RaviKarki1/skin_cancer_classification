@@ -82,7 +82,7 @@ CORS(app, origins=["http://localhost:3000", "http://localhost:3000"])
 # segmentation model
 try:
     segmentation_model = UNet()
-    segmentation_model.load_state_dict(torch.load('segmentation_model_v2_state_dict.pth', map_location=device))
+    segmentation_model.load_state_dict(torch.load('segmentation_model_v2_state_dict.pth', map_location=device, weights_only=True))
     segmentation_model.to(device)
     segmentation_model.eval()
 except Exception as e:
@@ -90,7 +90,7 @@ except Exception as e:
 
 #classification model
 try:
-    model = torch.load('seg_classif_lrReg.pth', map_location=device)
+    model = torch.load('seg_classif_lrReg.pth', map_location=device, weights_only=False)
     model.to(device)
     model.eval()
 except Exception as e:
